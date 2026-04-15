@@ -6,26 +6,23 @@
 
 declare(strict_types=1);
 
-namespace Joomla\Plugin\Fields\Gallery\Extension;
-
 use Joomla\CMS\Factory;
-use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Component\Fields\Administrator\Plugin\FieldsPlugin;
 
 defined('_JEXEC') or die;
 
+/**
+ * Legacy plugin entry class required for plugin discovery in Joomla admin.
+ */
 final class PlgFieldsGallery extends FieldsPlugin
 {
     /**
      * @var    boolean
-     * @since  1.0.0
      */
     protected $autoloadLanguage = true;
 
     /**
      * Returns the custom field type handled by this plugin.
-     *
-     * @return  array
      */
     public function onCustomFieldsGetTypes(): array
     {
@@ -49,7 +46,6 @@ final class PlgFieldsGallery extends FieldsPlugin
             return $result;
         }
 
-        // Load backend assets only in administrator editing screens.
         if (Factory::getApplication()->isClient('administrator')) {
             $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
 

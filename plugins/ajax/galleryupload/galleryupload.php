@@ -6,8 +6,6 @@
 
 declare(strict_types=1);
 
-namespace Joomla\Plugin\Ajax\Galleryupload\Extension;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
@@ -17,6 +15,9 @@ use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die;
 
+/**
+ * AJAX upload endpoint consumed by the gallery custom field.
+ */
 final class PlgAjaxGalleryupload extends CMSPlugin
 {
     /**
@@ -28,8 +29,6 @@ final class PlgAjaxGalleryupload extends CMSPlugin
      * AJAX endpoint for com_ajax&plugin=galleryupload.
      *
      * @return  array
-     *
-     * @throws  \RuntimeException
      */
     public function onAjaxGalleryupload(): array
     {
@@ -37,38 +36,38 @@ final class PlgAjaxGalleryupload extends CMSPlugin
         $input = $app->getInput();
 
         if (!$app->isClient('administrator')) {
-            throw new \RuntimeException('Unauthorized context.', 403);
+            throw new RuntimeException('Unauthorized context.', 403);
         }
 
         $user = $app->getIdentity();
 
         if (!$user || $user->guest) {
-            throw new \RuntimeException('You must be logged in.', 403);
+            throw new RuntimeException('You must be logged in.', 403);
         }
 
         $upload = $input->files->get('file', null, 'raw');
 
         if (!$upload || empty($upload['tmp_name']) || (int) ($upload['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK) {
-            throw new \RuntimeException('No valid file received.', 400);
+            throw new RuntimeException('No valid file received.', 400);
         }
 
         $safeName = File::makeSafe((string) ($upload['name'] ?? ''));
 
         if ($safeName === '') {
-            throw new \RuntimeException('Invalid file name.', 400);
+            throw new RuntimeException('Invalid file name.', 400);
         }
 
         $extension = strtolower((string) File::getExt($safeName));
         $allowed   = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
 
         if (!in_array($extension, $allowed, true)) {
-            throw new \RuntimeException('Unsupported file type.', 400);
+            throw new RuntimeException('Unsupported file type.', 400);
         }
 
         $targetFolder = $this->getUploadFolder();
 
         if (!Folder::exists(JPATH_ROOT . '/' . $targetFolder) && !Folder::create(JPATH_ROOT . '/' . $targetFolder)) {
-            throw new \RuntimeException('Unable to create upload folder.', 500);
+            throw new RuntimeException('Unable to create upload folder.', 500);
         }
 
         $baseName   = File::stripExt($safeName);
@@ -83,7 +82,7 @@ final class PlgAjaxGalleryupload extends CMSPlugin
         }
 
         if (!File::upload($upload['tmp_name'], $targetPath)) {
-            throw new \RuntimeException('Failed to move uploaded file.', 500);
+            throw new RuntimeException('Failed to move uploaded file.', 500);
         }
 
         return ['path' => $targetFolder . '/' . $fileName];
