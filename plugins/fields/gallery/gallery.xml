@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="fields" method="upgrade">
+    <name>plg_fields_gallery</name>
+    <author>Gallery Field Plugin</author>
+    <creationDate>2026-04-15</creationDate>
+    <version>1.0.0</version>
+    <description>PLG_FIELDS_GALLERY_XML_DESCRIPTION</description>
+    <namespace path="">Joomla\Plugin\Fields\Gallery</namespace>
+
+    <files>
+        <filename plugin="gallery">gallery.php</filename>
+        <filename>index.html</filename>
+        <folder>tmpl</folder>
+    </files>
+
+    <media destination="plg_fields_gallery" folder="media">
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_fields_gallery.ini</language>
+        <language tag="en-GB">language/en-GB/plg_fields_gallery.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field
+                    name="upload_folder"
+                    type="text"
+                    label="PLG_FIELDS_GALLERY_UPLOAD_FOLDER_LABEL"
+                    description="PLG_FIELDS_GALLERY_UPLOAD_FOLDER_DESC"
+                    default="images/gallery"
+                    size="40"
+                    filter="path"
+                />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

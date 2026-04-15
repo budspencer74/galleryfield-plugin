@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="ajax" method="upgrade">
+    <name>plg_ajax_galleryupload</name>
+    <author>Gallery Upload Plugin</author>
+    <creationDate>2026-04-15</creationDate>
+    <version>1.0.0</version>
+    <description>PLG_AJAX_GALLERYUPLOAD_XML_DESCRIPTION</description>
+    <namespace path="">Joomla\Plugin\Ajax\Galleryupload</namespace>
+
+    <files>
+        <filename plugin="galleryupload">galleryupload.php</filename>
+        <filename>index.html</filename>
+    </files>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_ajax_galleryupload.ini</language>
+        <language tag="en-GB">language/en-GB/plg_ajax_galleryupload.sys.ini</language>
+    </languages>
+</extension>
